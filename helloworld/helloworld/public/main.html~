@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<!-- saved from url=(0060)http://getbootstrap.com/2.3.2/examples/starter-template.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Bootstrap, from Twitter</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="http://getbootstrap.com/2.3.2/assets/css/bootstrap.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    <style>
+      body {
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
+    </style>
+    <link href="http://getbootstrap.com/2.3.2/assets/css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="../assets/js/html5shiv.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://getbootstrap.com/2.3.2/assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://getbootstrap.com/2.3.2/assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://getbootstrap.com/2.3.2/assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="http://getbootstrap.com/2.3.2/assets/ico/apple-touch-icon-57-precomposed.png">
+    <link rel="shortcut icon" href="http://getbootstrap.com/2.3.2/assets/ico/favicon.png">
+    <link rel="stylesheet" type="text/css" href="clippy.js/build/clippy.css" media="all">
+
+  </head>
+
+  <body>
+    <div id="wrap">
+      <div class="navbar navbar-inverse navbar-fixed-top">
+	<div class="navbar-inner">
+	  <div class="container">
+	    <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+	      <span class="icon-bar"></span>
+	      <span class="icon-bar"></span>
+	      <span class="icon-bar"></span>
+	    </button>
+	    <a class="brand" href="http://getbootstrap.com/2.3.2/examples/starter-template.html#">Lab 1</a>
+	    <div class="nav-collapse collapse">
+	      <ul class="nav">
+		<li class="active"><a href="http://getbootstrap.com/2.3.2/examples/starter-template.html#">Home</a></li>
+	      </ul>
+	    </div>
+	  </div>
+	</div>
+      </div>
+
+      <div class="container">
+	<div class="linksPlay">
+	  <h1>Play With Links!</h1>
+	  <div class="btn-toolbar" id="clippyActions">
+	    <button class="btn btn-warning btn-large" id="btnArtsy">Get Artsy!</button>
+	    <button class="btn btn-info btn-large" id="btnCheck">Let Me Check!</button>
+	    <button class="btn btn-danger btn-large" id="btnShred">Shred Everythng!</button>
+	  </div>
+	</div>
+      </div> <!-- /container -->
+      
+      <div id="push"></div>
+      </div>
+      <div id="footer">
+	<div class="container">
+	  <p class="muted credit">Lawrence Wong 0725315</p>
+	</div>
+      </div>
+    </div>
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="./main_files/jquery.js"></script>
+    <script src="./main_files/bootstrap-transition.js"></script>
+    <script src="./main_files/bootstrap-alert.js"></script>
+    <script src="./main_files/bootstrap-modal.js"></script>
+    <script src="./main_files/bootstrap-dropdown.js"></script>
+    <script src="./main_files/bootstrap-scrollspy.js"></script>
+    <script src="./main_files/bootstrap-tab.js"></script>
+    <script src="./main_files/bootstrap-tooltip.js"></script>
+    <script src="./main_files/bootstrap-popover.js"></script>
+    <script src="./main_files/bootstrap-button.js"></script>
+    <script src="./main_files/bootstrap-collapse.js"></script>
+    <script src="./main_files/bootstrap-carousel.js"></script>
+    <script src="./main_files/bootstrap-typeahead.js"></script>
+
+    <!-- Clippy.js -->
+    <script src="clippy.js/build/clippy.min.js"></script>
+
+    <!-- Init script -->
+    <script type="text/javascript">	
+	clippy.load('Links', function(agent) {
+	    // Do anything with the loaded agent
+	    agent.show();
+	    $('#btnArtsy').on('click', function(event) {
+	      agent.play('GetArtsy');
+	    });
+	    $('#btnCheck').on('click', function(event) {
+	      agent.play('CheckingSomething');
+	    });
+	    $('#btnShred').on('click', function(event) {
+	      agent.play('EmptyTrash');
+	    });
+	});
+    </script>
+  
+
+</body></html>

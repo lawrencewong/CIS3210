@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>CIS*3210 Website</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Computer Networking Website">
+    <meta name="author" content="Lawrence Wong">
+
+    <!-- Le styles -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    <link href="css/bootstrap-responsive.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="clippy.js/build/clippy.css" media="all">
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  </head>
+
+  <body>
+    <div id="wrap">
+      <div class="navbar navbar-inverse navbar-fixed-top">
+	<div class="navbar-inner">
+	  <div class="container">
+	    <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+	      <span class="icon-bar"></span>
+	      <span class="icon-bar"></span>
+	      <span class="icon-bar"></span>
+	    </button>
+	    <a class="brand" href="#">CIS*3210 Website</a>
+	    <div class="nav-collapse collapse">
+	      <ul class="nav">
+		<li class="active"><a href="#">Home</a></li>
+	      </ul>
+	    </div>
+	  </div>
+	</div>
+      </div>
+
+      <div class="container">
+	<h1> Play With Links the Cat!</h1>
+	<h4> This is the web application for you to play with the clippy.js functions. </h4>
+	<h4> Press the buttons below to play with Links. The javascript for Links is from the <a href="https://www.smore.com/clippy-js"> Clippy.js</a> website.</h4>
+      </div>
+
+      <div class="container">
+	<div class="linksPlayButton">
+	  <div class="btn-toolbar">
+	    <button class="btn btn-warning btn-small" id="btnArtsy">Get Artsy!</button>
+	    <button class="btn btn-info btn-small" id="btnCheck">Let Me Check!</button>
+	    <button class="btn btn-danger btn-small" id="btnShred">Shred Everythng!</button>
+	  </div>
+	  <div class="btn-toolbar">
+	    <button class="btn btn-success btn-large" id="btnLaugh">Make Me Laugh!</button>
+	  </div>
+	</div>
+      </div>
+
+      <div id="push"></div> <!-- Sticky footer push -->
+    </div> <!-- /Wrap for sticky footer -->
+
+    <div id="footer">
+      <div class="container">
+	<p class="muted credit">Lawrence Wong 0725315</p>
+      </div>
+    </div>
+    
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="./js/jquery.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+
+    <!-- Clippy.js -->
+    <script src="clippy.js/build/clippy.js"></script>
+
+    <!-- Init script -->
+    <script type="text/javascript">	
+	clippy.load('Links', function(agent) {
+	    // Do anything with the loaded agent
+	    agent.show();
+	    $('#btnArtsy').on('click', function(event) {
+	      agent.play('GetArtsy');
+	    });
+	    $('#btnCheck').on('click', function(event) {
+	      agent.play('CheckingSomething');
+	    });
+	    $('#btnShred').on('click', function(event) {
+	      agent.play('EmptyTrash');
+	    });
+	    $('#btnLaugh').on('click', function(event){
+	      var jokes = new Array("What do you get when you cross a cat with a lemon?",
+				     "What do you call a pile of kittens?",
+				     "What did the cat say when he lost all his money?",
+				     "What is a cat's favorite color?",
+				     "What do cats eat for breakfast?"
+				    );
+
+	      var punchLines = new Array("A sour puss!", 
+					  "A meowtain!",
+					  "I'm so paw!",
+					  "Purrrple!",
+					  "Mice Crispies!"
+					  );
+	      randno = Math.floor( Math.random() * jokes.length );
+	      agent.speak(jokes[randno]);
+	      agent.speak(".........");
+	      agent.speak(punchLines[randno]);
+	    });
+	});
+    </script>
+  </body>
+</html>
