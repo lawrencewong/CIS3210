@@ -15,3 +15,11 @@ Go to this address in your web browser.
 http://127.0.0.1:5000/
 
 Using the buttons play with Links the Cat!
+
+********************CREATIVITY ELEMENT***********************
+Clicking on the "Make Me Laugh!" button will trigger Links to
+tell a cat related joke. He has up to five great one liners.
+
+I used some javascript to randomize the joke Links will say.
+
+*************************************************************
