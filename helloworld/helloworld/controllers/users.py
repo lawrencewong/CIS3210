@@ -20,12 +20,9 @@ class UsersController(BaseController):
     
     def addUser(self, userid):
       c.userid = userid
-      global data
       if request.method == 'POST':
 	if userid in data:
 	  return json.dumps(data[userid])
-	else:
-	  return json.dumps({'error':'User not found.'})
 	  
     def changeName(self, userid):
       c.userid = userid

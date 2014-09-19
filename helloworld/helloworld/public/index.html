@@ -34,7 +34,7 @@
       </div>
 
       <div class="container">
-	<h1>RESTful API and AJAX!</h1>
+	<h2><a href="http://www.restapitutorial.com/" style="color: WHITE;">RESTful API</a> and <a href="http://api.jquery.com/jquery.ajax/" style="color: WHITE;">AJAX</a></h2>
 
       </div>
 
@@ -88,9 +88,9 @@
     <!-- Init script -->
     <script type="text/javascript">	
 	   $('#addUser').on('click', function(event) {
-      if($('#userid').val()=="")
+      if($('#firstName').val()=="" || $('#lastName').val()=="")
       {
-        $('#status-box').val("User ID required.");
+        $('#status-box').val("First and last names required.");
       }else{
          $.ajax({
             type: "POST",
