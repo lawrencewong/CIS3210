@@ -39,6 +39,10 @@
 
       <div class="container">
         <h2><a href="http://www.restapitutorial.com/" style="color: WHITE;">RESTful API</a> and <a href="http://api.jquery.com/jquery.ajax/" style="color: WHITE;">AJAX</a></h2>
+	<h5>This is an web application that uses a RESTful API and jQuery's AJAX to mimic a user managment web application with a database.
+	    Play with the user's functions and see what the returns from the server side are. All user functions work. The server side
+	    has been set up to mimic a database on one session.
+	</h5>
       </div>
 
       <div class="container">
@@ -73,9 +77,8 @@
         <textarea readonly id="status-box" placeholder="Status and data that will be returned."></textarea>
       </div>
 
-    </div><!-- /Wrap for sticky footer -->
-
-    <div id="push"></div> <!-- Sticky footer push -->
+      <div id="push"></div> <!-- Sticky footer push -->
+    </div>
 
     <div id="footer">
       <div class="container">
@@ -146,9 +149,7 @@
 
       $('#removeUser').on('click', function(event) {
         if($('#userid').val()==""){
-            $('#status-box').css('color' : 'ORANGE');
             $('#status-box').val("User ID required.");
-            $('#status-box').css('color' : 'BLACK');
           }else{
             event.preventDefault();
             if (window.confirm("Are you sure?")) {
@@ -158,14 +159,10 @@
               })
               .done(function( data ) {
                 var obj = jQuery.parseJSON( data );
-                if( obj.hasOwnProperty('error')){
-                  $('#status-box').css('color' : 'RED');
+                if( obj.hasOwnProperty('error')){;
                   $('#status-box').val("ERROR: " + obj.error);
-                  $('#status-box').css('color' : 'BLACK');
                 }else{
-                  $('#status-box').css('color' : 'GREEN');
                   $('#status-box').val("Removing User: " + data);
-                  $('#status-box').css('color' : 'BLACK');
                 }
               });
             }
