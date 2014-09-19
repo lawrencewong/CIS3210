@@ -94,7 +94,8 @@
       }else{
          $.ajax({
             type: "POST",
-            url: "http://127.0.0.1:5000/users/addUser/" + $('#userid').val()
+            url: "/users/addUser",
+            data: {firstName:$('#firstName').val(), lastName:$('#lastName').val()}
             })
             .done(function( data ) {
               $('#status-box').val(data);
@@ -108,10 +109,17 @@
       }else{
          $.ajax({
             type: "PUT",
-            url: "http://127.0.0.1:5000/users/changeName/" + $('#userid').val()
+            url: "/users/changeName/" + $('#userid').val(),
+            data: {firstName:$('#firstName').val(), lastName:$('#lastName').val()}
             })
             .done(function( data ) {
-              $('#status-box').val(data);
+              var obj = jQuery.parseJSON( data );
+
+                if( obj.hasOwnProperty('error')){
+                   $('#status-box').val("ERROR: " + obj.error);
+                }else{
+                  $('#status-box').val("Edited User: " + data);
+                }
             });
         }
       });
@@ -122,7 +130,7 @@
       }else{
          $.ajax({
             type: "GET",
-            url: "http://127.0.0.1:5000/users/userCheck/" + $('#userid').val()
+            url: "/users/userCheck/" + $('#userid').val()
             })
             .done(function( data ) {
               var obj = jQuery.parseJSON( data );
@@ -144,7 +152,7 @@
           if (window.confirm("Are you sure?")) {
                $.ajax({
               type: "DELETE",
-              url: "http://127.0.0.1:5000/users/removeUser/" + $('#userid').val()
+              url: "/users/removeUser/" + $('#userid').val()
               })
               .done(function( data ) {
                 var obj = jQuery.parseJSON( data );
