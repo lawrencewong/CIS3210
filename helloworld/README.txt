@@ -28,4 +28,5 @@ based on a counter, to abstract the missing autoincrement of an actual databse.
 Styling has improved since the last iteration of the site. A new background image
 is set as well as a favicon.
 
+Another static page has been made that will hold screenshots of every iteration of this site.
 *************************************************************
