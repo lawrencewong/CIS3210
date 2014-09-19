@@ -35,21 +35,15 @@
       </div>
 
       <div class="container">
-	<h1> Play With Links the Cat!</h1>
-	<h4> This is the web application for you to play with the clippy.js functions. </h4>
-	<h4> Press the buttons below to play with Links. The javascript for Links is from the <a href="https://www.smore.com/clippy-js"> Clippy.js</a> website.</h4>
-	<h4> Links has some great jokes! Make sure you click on "Make Me Laugh!" for one liners!</h4>
+	<h1>RESTful API and AJAX!</h1>
+
       </div>
 
       <div class="container">
-	<div class="linksPlayButton">
+	<div class="buttonline">
 	  <div class="btn-toolbar">
-	    <button class="btn btn-warning btn-small" id="btnArtsy">Get Artsy!</button>
-	    <button class="btn btn-info btn-small" id="btnCheck">Let Me Check!</button>
-	    <button class="btn btn-danger btn-small" id="btnShred">Shred Everythng!</button>
-	  </div>
-	  <div class="btn-toolbar">
-	    <button class="btn btn-success btn-large" id="btnLaugh">Make Me Laugh!</button>
+	    <input id="checkMemberID"/>
+	    <button class="btn btn-primary btn-large" id="checkMember">Check Member</button>
 	  </div>
 	</div>
       </div>
@@ -68,43 +62,16 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="./js/jquery-1.11.1.min.js"></script>
     <script src="./js/bootstrap.min.js"></script>
-
-    <!-- Clippy.js -->
-    <script src="clippy.js/build/clippy.js"></script>
-
     <!-- Init script -->
     <script type="text/javascript">	
-	clippy.load('Links', function(agent) {
-	    // Do anything with the loaded agent
-	    agent.show();
-	    $('#btnArtsy').on('click', function(event) {
-	      agent.play('GetArtsy');
-	    });
-	    $('#btnCheck').on('click', function(event) {
-	      agent.play('CheckingSomething');
-	    });
-	    $('#btnShred').on('click', function(event) {
-	      agent.play('EmptyTrash');
-	    });
-	    $('#btnLaugh').on('click', function(event){
-	      var jokes = new Array("What do you get when you cross a cat with a lemon?",
-				     "What do you call a pile of kittens?",
-				     "What did the cat say when he lost all his money?",
-				     "What is a cat's favorite color?",
-				     "What do cats eat for breakfast?"
-				    );
-
-	      var punchLines = new Array("A sour puss!", 
-					  "A meowtain!",
-					  "I'm so paw!",
-					  "Purrrple!",
-					  "Mice Crispies!"
-					  );
-	      randno = Math.floor( Math.random() * jokes.length );
-	      agent.speak(jokes[randno]);
-	      agent.speak(".........");
-	      agent.speak(punchLines[randno]);
-	    });
+	$('#checkMember').on('click', function(event) {
+	      $.ajax({
+		type: "GET",
+		url: "http://127.0.0.1:5000/users/memberCheck/" + $('#checkMemberID').val()
+	      })
+	      .done(function( data ) {
+		console.log( "Data Saved: " + data );
+	      });
 	});
     </script>
   </body>
