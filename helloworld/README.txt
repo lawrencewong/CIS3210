@@ -23,7 +23,8 @@ objects that represent the actions.
 On one session of using the web application the buttons and functions
 all work and the server side mimics a plugged in database. Newly created users
 can be searched and edited as well as removed. They are assigned 'unique' IDs
-based on a counter, to abstract the missing autoincrement of an actual databse.
+based on a counter, to abstract the missing autoincrement of an actual database.
+The server returns in JSON objects which will be very helpful in future iterations.
 
 Styling has improved since the last iteration of the site. A new background image
 is set as well as a favicon.
