@@ -10,8 +10,7 @@
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/main.css" rel="stylesheet">
     <link href="css/bootstrap-responsive.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="clippy.js/build/clippy.css" media="all">
-    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="favicon.ico" type="image/x-icon"/>
   </head>
 
   <body>
@@ -40,12 +39,36 @@
       </div>
 
       <div class="container">
-	<div class="buttonline">
-	  <div class="btn-toolbar">
-	    <input id="checkMemberID"/>
-	    <button class="btn btn-primary btn-large" id="checkMember">Check Member</button>
-	  </div>
-	</div>
+        <div class="rest-form">
+          <div class="row">
+            <div class="span6">
+              <div>
+      	       <input type="number" min="0" id="userid" placeholder="User ID">
+              </div>
+              <div>
+             <input type="text" id="firstName" placeholder="First Name">
+              </div>
+              <div>
+             <input type="text" id="lastName" placeholder="Last Name">
+              </div>
+            </div>
+            <div class="span6">
+                  <label for="status-box" class="rest-labels">User Functions:</label>
+                  <div>
+                    <button class="btn btn-success btn-small" id="addUser">Add User</button>
+                    <button class="btn btn-warning btn-small" id="changeName">Edit User</button>
+                    <button class="btn btn-info btn-small" id="checkUser">User Check</button>
+                    <button class="btn btn-danger btn-small" id="removeUser">Remove User</button>
+                  </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+        <div class="user-forms">
+          <label for="status-box"  class="rest-labels">Status / Returns:</label>
+          <textarea readonly id="status-box" placeholder="Status and data that will be returned."></textarea>
+        </div>
       </div>
 
       <div id="push"></div> <!-- Sticky footer push -->
@@ -64,15 +87,77 @@
     <script src="./js/bootstrap.min.js"></script>
     <!-- Init script -->
     <script type="text/javascript">	
-	$('#checkMember').on('click', function(event) {
-	      $.ajax({
-		type: "GET",
-		url: "http://127.0.0.1:5000/users/memberCheck/" + $('#checkMemberID').val()
-	      })
-	      .done(function( data ) {
-		console.log( "Data Saved: " + data );
-	      });
-	});
+	   $('#addUser').on('click', function(event) {
+      if($('#userid').val()=="")
+      {
+        $('#status-box').val("User ID required.");
+      }else{
+         $.ajax({
+            type: "POST",
+            url: "http://127.0.0.1:5000/users/addUser/" + $('#userid').val()
+            })
+            .done(function( data ) {
+              $('#status-box').val(data);
+            });
+        }
+      });
+     $('#changeName').on('click', function(event) {
+      if($('#userid').val()=="")
+      {
+        $('#status-box').val("User ID required.");
+      }else{
+         $.ajax({
+            type: "PUT",
+            url: "http://127.0.0.1:5000/users/changeName/" + $('#userid').val()
+            })
+            .done(function( data ) {
+              $('#status-box').val(data);
+            });
+        }
+      });
+     $('#checkUser').on('click', function(event) {
+      if($('#userid').val()=="")
+      {
+        $('#status-box').val("User ID required.");
+      }else{
+         $.ajax({
+            type: "GET",
+            url: "http://127.0.0.1:5000/users/userCheck/" + $('#userid').val()
+            })
+            .done(function( data ) {
+              var obj = jQuery.parseJSON( data );
+
+                if( obj.hasOwnProperty('error')){
+                   $('#status-box').val("ERROR: " + obj.error);
+                }else{
+                  $('#status-box').val("Found User: " + data);
+                }
+            });
+        }
+      });
+     $('#removeUser').on('click', function(event) {
+        if($('#userid').val()=="")
+        {
+          $('#status-box').val("User ID required.");
+        }else{
+          event.preventDefault();
+          if (window.confirm("Are you sure?")) {
+               $.ajax({
+              type: "DELETE",
+              url: "http://127.0.0.1:5000/users/removeUser/" + $('#userid').val()
+              })
+              .done(function( data ) {
+                var obj = jQuery.parseJSON( data );
+                if( obj.hasOwnProperty('error')){
+                   $('#status-box').val("ERROR: " + obj.error);
+                }else{
+                  $('#status-box').val("Removing User: " + data);
+                }
+              });
+          }
+          
+          }
+      });
     </script>
   </body>
 </html>

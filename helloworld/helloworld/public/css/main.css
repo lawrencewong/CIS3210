@@ -1,7 +1,7 @@
 html,
 body {
   height: 100%;
-  background-color: #F33A44;
+  background: url("../img/background.jpg") repeat;
   color: #FFFFFF;
 }
 /* Wrapper for page content to push down footer */
@@ -39,6 +39,18 @@ body {
     padding-right: 20px;
   }
 }
-.buttonline{
+.user-forms{
   text-align: center; 
+}
+#status-box{
+  width: 300px;
+  height: 75px;
+  resize: none;
+  background-color: #FFFFFF;
+}
+.rest-form{
+  text-align: center;
+}
+.rest-labels{
+  font-weight: bold;
 }

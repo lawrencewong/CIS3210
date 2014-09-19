@@ -18,7 +18,7 @@ data = {
 	}
 class UsersController(BaseController):
     
-    def saveUser(self, userid):
+    def addUser(self, userid):
       c.userid = userid
       global data
       if request.method == 'POST':
@@ -36,21 +36,21 @@ class UsersController(BaseController):
 	else:
 	  return json.dumps({'error':'User not found.'})
       
-    def memberCheck(self, userid):
+    def userCheck(self, userid):
       c.userid = userid
       global data
       if request.method == 'GET':
-	if userid in data:
-	  return json.dumps(data[userid])
-	else:
-	  return json.dumps({'error':'User not found.'})
+		if userid in data:
+		  return json.dumps(data[userid])
+		else:
+ 		  return json.dumps({'error':'Cannot check for user. User ID not found.'})
 
       
     def removeUser(self, userid):
       c.userid = userid
       global data
       if request.method == 'DELETE':
-	if userid in data:
-	  return json.dumps({'Deleting User' : data[userid]})
-	else:
-	  return json.dumps({'error':'User not found.'})
+		if userid in data:
+		  return json.dumps(data[userid])
+		else:
+		  return json.dumps({'error':'Cannot remove user. User not found.'})
