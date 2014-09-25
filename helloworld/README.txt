@@ -31,3 +31,13 @@ is set as well as a favicon.
 
 Another static page has been made that will hold screenshots of every iteration of this site.
 *************************************************************
+
+LAB 3:
+Selenium tests have been added for the client side. They are in the Selenium folder and will check
+the response form the server when the client does not provide the correct data.
+
+To run NoseTests
+Go to the root directory and run
+ nosetests helloworld/tests/functional/test_users.py
+These tests will test the functionality of the server side. It tests each kind of requests
+that is present in the site.
