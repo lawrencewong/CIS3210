@@ -1,5 +1,6 @@
 import logging
 import json
+import MySQLdb
 
 from pylons import request, response, session, tmpl_context as c, url
 from pylons.controllers.util import abort, redirect
@@ -19,6 +20,11 @@ data = {
 }
 userCount = 3
 
+db = MySQLdb.connect(host="dursley.socs.uoguelph.ca",
+                    user="lwong01", # replace with your username
+                    passwd="0725315", # replace with your password (student id number, including leading 0)
+                    db="lwong01") # course databasey
+cur = db.cursor()
 class UsersController(BaseController):
     
     #addUser function adds to the dictionary of users incrementing the userCount for 'unique' ID's. Utilizing POST request.
@@ -44,9 +50,20 @@ class UsersController(BaseController):
 	#userCheck function to look up a given user based on user ID. Using GET requests.
 	def userCheck(self, userid):
 		c.userid = userid
+		cur.execute('SELECT * FROM users WHERE id = "' + userid +'";')
+		for row in cur.fetchall() :
+		  print row[0]
+		  data = {
+		    'id': row[0],
+		    'firstname' : row[1],
+		    'lastname' : row[2],
+		    'sex' : row[3],
+		    'date_of_birth' : row[4],
+		    'username' : row[5],
+		  }
 		if request.method == 'GET':
-			if userid in data:
-				return json.dumps(data[userid])
+			if 'id' in data:
+				return json.dumps(data)
 			else:
 				return json.dumps({'error':'Cannot check for user. User ID not found.'})
 
