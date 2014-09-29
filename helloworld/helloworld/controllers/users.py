@@ -50,30 +50,40 @@ class UsersController(BaseController):
 	#userCheck function to look up a given user based on user ID. Using GET requests.
 	def userCheck(self, userid):
 		c.userid = userid
-		cur.execute('SELECT * FROM users WHERE id = "' + userid +'";')
-		for row in cur.fetchall() :
-		  print row[0]
-		  data = {
-		    'id': row[0],
-		    'firstname' : row[1],
-		    'lastname' : row[2],
-		    'sex' : row[3],
-		    'date_of_birth' : row[4],
-		    'username' : row[5],
-		  }
 		if request.method == 'GET':
-			if 'id' in data:
-				return json.dumps(data)
-			else:
-				return json.dumps({'error':'Cannot check for user. User ID not found.'})
+		  cur.execute('SELECT * FROM users WHERE id = "' + userid +'";')
+		  for row in cur.fetchall() :
+		    print row[0]
+		    data = {
+		      'id': row[0],
+		      'firstname' : row[1],
+		      'lastname' : row[2],
+		      'sex' : row[3],
+		      'date_of_birth' : row[4].isoformat() if hasattr(row[4], 'isoformat') else row[4],
+		      'username' : row[5],
+		    }
+		    if 'id' in data:
+			    return json.dumps(data)
+		    else:
+			    return json.dumps({'error':'Cannot check for user. User ID not found.'})
 
 	#remoceUser deletes a user from the 'database' based on user ID. Using DELETE requests.
 	def removeUser(self, userid):
 		c.userid = userid
 		if request.method == 'DELETE':
-			if userid in data:
-				deleteUser = data[userid]	
-				del data[userid]
-				return json.dumps(deleteUser)
-			else:
-				return json.dumps({'error':'Cannot remove user. User not found.'})
+		      cur.execute('SELECT * FROM users WHERE id = "' + userid +'";')
+		      for row in cur.fetchall() :
+			print row[0]
+			data = {
+			  'id': row[0],
+			  'firstname' : row[1],
+			  'lastname' : row[2],
+			  'sex' : row[3],
+			  'date_of_birth' : row[4].isoformat() if hasattr(row[4], 'isoformat') else row[4],
+			  'username' : row[5],
+			}
+		      cur.execute('DELETE FROM users WHERE id = "' + userid +'";')
+		      if 'id' in data:
+			      return json.dumps(data)
+		      else:
+			      return json.dumps({'error':'Cannot remove user. User not found.'})
