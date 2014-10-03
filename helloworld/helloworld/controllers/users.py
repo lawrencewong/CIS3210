@@ -10,15 +10,15 @@ from helloworld.lib.base import BaseController, render
 log = logging.getLogger(__name__)
 
 #Hardcoded data to simulate a databse of users
-user1 = {'id': '1', 'firstname' : 'Lawrence', 'lastname' : 'Wong', 'role' : 'Developer'}
-user2 = {'id': '2', 'firstname' : 'Greg', 'lastname' : 'Klotz', 'role' : 'Professor'}
-user3 = {'id': '3', 'firstname' : 'Links', 'lastname' : 'Cat', 'role' : 'Feline'}    
-data = {
-	  '1' : user1,
-	  '2' : user2,
-	  '3' : user3
-}
-userCount = 3
+#user1 = {'id': '1', 'firstname' : 'Lawrence', 'lastname' : 'Wong', 'role' : 'Developer'}
+#user2 = {'id': '2', 'firstname' : 'Greg', 'lastname' : 'Klotz', 'role' : 'Professor'}
+#user3 = {'id': '3', 'firstname' : 'Links', 'lastname' : 'Cat', 'role' : 'Feline'}    
+#data = {
+	  #'1' : user1,
+	  #'2' : user2,
+	  #'3' : user3
+#}
+#userCount = 3
 
 db = MySQLdb.connect(host="dursley.socs.uoguelph.ca",
                     user="lwong01", # replace with your username
@@ -50,10 +50,10 @@ class UsersController(BaseController):
 	#userCheck function to look up a given user based on user ID. Using GET requests.
 	def userCheck(self, userid):
 		c.userid = userid
+		data = 0;
 		if request.method == 'GET':
 		  cur.execute('SELECT * FROM users WHERE id = "' + userid +'";')
 		  for row in cur.fetchall() :
-		    print row[0]
 		    data = {
 		      'id': row[0],
 		      'firstname' : row[1],
@@ -62,18 +62,18 @@ class UsersController(BaseController):
 		      'date_of_birth' : row[4].isoformat() if hasattr(row[4], 'isoformat') else row[4],
 		      'username' : row[5],
 		    }
-		    if 'id' in data:
-			    return json.dumps(data)
-		    else:
-			    return json.dumps({'error':'Cannot check for user. User ID not found.'})
+		  if data:
+			  return json.dumps(data)
+		  else:
+			  return json.dumps({'error':'Cannot check for user. User ID not found.'})
 
 	#remoceUser deletes a user from the 'database' based on user ID. Using DELETE requests.
 	def removeUser(self, userid):
 		c.userid = userid
+		data = 0;
 		if request.method == 'DELETE':
 		      cur.execute('SELECT * FROM users WHERE id = "' + userid +'";')
 		      for row in cur.fetchall() :
-			print row[0]
 			data = {
 			  'id': row[0],
 			  'firstname' : row[1],
@@ -83,7 +83,8 @@ class UsersController(BaseController):
 			  'username' : row[5],
 			}
 		      cur.execute('DELETE FROM users WHERE id = "' + userid +'";')
-		      if 'id' in data:
+		      db.commit()
+		      if data:
 			      return json.dumps(data)
 		      else:
 			      return json.dumps({'error':'Cannot remove user. User not found.'})
