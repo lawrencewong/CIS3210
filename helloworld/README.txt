@@ -20,24 +20,29 @@ Using different types of requests and actions the server side will return JSON
 objects that represent the actions.
 
 ********************CREATIVITY ELEMENT***********************
-On one session of using the web application the buttons and functions
-all work and the server side mimics a plugged in database. Newly created users
-can be searched and edited as well as removed. They are assigned 'unique' IDs
-based on a counter, to abstract the missing autoincrement of an actual database.
-The server returns in JSON objects which will be very helpful in future iterations.
+All previous user functions have been enhanced with an actual database.
+The web application is no longer relient on being a one session run, because
+it can now update and query the database for information.
 
-Styling has improved since the last iteration of the site. A new background image
-is set as well as a favicon.
+When adding a new user it will check/notify the user if the username is not 
+avalible. 
 
-Another static page has been made that will hold screenshots of every iteration of this site.
-*************************************************************
+The queries have the MySQL keyword BINARY in them to check if the usernames
+and passwords match for case sensitivity because the default for MySQL is 
+case-insensitive which could create many issues.
 
-LAB 3:
-Selenium tests have been added for the client side. They are in the Selenium folder and will check
-the response form the server when the client does not provide the correct data.
+I have updated my Lab History page to include a screenshot from Labs 2 and 3
+of what the UI used to look like.
 
-To run NoseTests
-Go to the root directory and run
- nosetests helloworld/tests/functional/test_users.py
-These tests will test the functionality of the server side. It tests each kind of requests
-that is present in the site.
+This time around I am making the user use usernames to search for users instead
+of having to know the id of the user.
+
+To prevent SQL injections I set up my queries to be first concatednated with the user
+entered information. Then I used that SQL variable to be executed.
+
+Authenticaion is also used when trying to edit a user. 
+
+I am using SQL's NOW() function to capture what date the accounts were created on.
+
+Frontend tests have been updated.
+***************************************************************

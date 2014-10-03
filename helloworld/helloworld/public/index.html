@@ -32,7 +32,6 @@
               <ul class="nav">
                 <li class="active"><a href="#">Home</a></li>
                 <li><a href="labHistory.html">Lab History</a></li>
-                <li><a href="register.html">Register</a></li>
               </ul>
             </div>
           </div>
@@ -40,10 +39,10 @@
       </div>
 
       <div class="container">
-        <h2><a href="http://www.restapitutorial.com/" style="color: WHITE;">RESTful API</a> and <a href="http://api.jquery.com/jquery.ajax/" style="color: WHITE;">AJAX</a></h2>
+        <h2><a href="http://www.mysql.com/" style="color: WHITE;">MySQL</a></h2>
 	<h5>This is an web application that uses a RESTful API and jQuery's AJAX to mimic a user managment web application with a database.
-	    Play with the user's functions and see what the returns from the server side are. All user functions work. The server side
-	    has been set up to mimic a database on one session.
+	    Play with the user's functions and see what the returns from the server side are. All user functions work. The server side has been
+	    updated to work with a running MySQL databse.
 	</h5>
       </div>
 
@@ -52,7 +51,10 @@
           <div class="row">
             <div class="span6">
               <div>
-                <input type="number" min="0" id="userid" placeholder="User ID">
+                <input type="text" min="0" id="userName" placeholder="Username">
+              </div>
+              <div>
+                <input type="password" min="0" id="password" placeholder="Password">
               </div>
               <div>
                 <input type="text" id="firstName" placeholder="First Name">
@@ -93,31 +95,41 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="./js/jquery-1.11.1.min.js"></script>
     <script src="./js/bootstrap.min.js"></script>
-    <script type="text/javascript">	
-
+    <script type="text/javascript">
       $('#addUser').on('click', function(event) {
-        if($('#firstName').val()=="" || $('#lastName').val()==""){
-            $('#status-box').val("First and last names required.");
-        }else{
-          $.ajax({
-            type: "POST",
-            url: "/users/addUser",
-            data: {firstName:$('#firstName').val(), lastName:$('#lastName').val()}
-          })
-          .done(function( data ) {
-            $('#status-box').val("Added User: " + data);
-          });
-        }
-      });
+	  if($('#userName').val()=="" || $('#firstName').val()=="" || $('#lastName').val()=="" || $('#password').val()==""){
+	     $('#status-box').val("Username, password, first and last names required.");
+	  }else{
+	    $.ajax({
+	      type: "GET",
+	      url: "/users/existingUser/" + $('#userName').val(),
+	    })
+	    .done(function( data ) {
+	      var obj = jQuery.parseJSON( data );
+	      if( obj.hasOwnProperty('error')){;
+		$('#status-box').val("ERROR: " + obj.error);
+	      }else{
+		 $.ajax({
+		  type: "POST",
+		  url: "/users/addUser",
+		  data: {firstName:$('#firstName').val(), lastName:$('#lastName').val(), password:$('#password').val(), userName:$('#userName').val()}
+		})
+		.done(function( data ) {
+		  $('#status-box').val("Added User: " + data);
+		});
+	      }
+	    });
+	  }
+	});
 
       $('#changeName').on('click', function(event) {
-        if($('#userid').val()=="" || $('#firstName').val()=="" || $('#lastName').val()==""){
-          $('#status-box').val("User ID, first and last names required.");
+        if($('#userName').val()=="" || $('#firstName').val()=="" || $('#lastName').val()=="" || $('#password').val()==""){
+          $('#status-box').val("Username, password, first and last names required.");
         }else{
           $.ajax({
             type: "PUT",
-            url: "/users/changeName/" + $('#userid').val(),
-            data: {firstName:$('#firstName').val(), lastName:$('#lastName').val()}
+            url: "/users/editUser/" + $('#userid').val(),
+            data: {firstName:$('#firstName').val(), lastName:$('#lastName').val(), password:$('#password').val(), userName:$('#userName').val()}
           })
           .done(function( data ) {
             var obj = jQuery.parseJSON( data );
@@ -131,12 +143,12 @@
       });
 
       $('#checkUser').on('click', function(event) {
-        if($('#userid').val()==""){
-          $('#status-box').val("User ID required.");
+        if($('#userName').val()==""){
+          $('#status-box').val("Username required.");
         }else{
           $.ajax({
             type: "GET",
-            url: "/users/userCheck/" + $('#userid').val()
+            url: "/users/userCheck/" + $('#userName').val()
           })
           .done(function( data ) {
             var obj = jQuery.parseJSON( data );
@@ -150,14 +162,14 @@
       });
 
       $('#removeUser').on('click', function(event) {
-        if($('#userid').val()==""){
-            $('#status-box').val("User ID required.");
+        if($('#userName').val()==""){
+            $('#status-box').val("Username required.");
           }else{
             event.preventDefault();
             if (window.confirm("Are you sure?")) {
               $.ajax({
                 type: "DELETE",
-                url: "/users/removeUser/" + $('#userid').val()
+                url: "/users/removeUser/" + $('#userName').val(),
               })
               .done(function( data ) {
                 var obj = jQuery.parseJSON( data );
