@@ -29,23 +29,49 @@ class UsersController(BaseController):
     
     #addUser function adds to the dictionary of users incrementing the userCount for 'unique' ID's. Utilizing POST request.
 	def addUser(self):
+		data = 0;
 		if request.method == 'POST':
-			global userCount
-			userCount+=1
-			newUser = {'id' : userCount, 'firstname' : request.POST.get('firstName'), 'lastname' : request.POST.get('lastName'), 'role' : 'Guest'}
-			data[str(userCount)] = newUser
-			return json.dumps(newUser)
+			cur.execute('INSERT INTO users VALUES (NULL, "' + request.POST.get('firstName') + '", "' + request.POST.get('lastName') + '", "' + request.POST.get('dateOfBirth') + '", "' + request.POST.get('userName') + '", "' + request.POST.get('password') + '");')
+			db.commit()
+			cur.execute('SELECT * FROM users WHERE username = "' + request.POST.get('userName') +'";')
+			for row in cur.fetchall() :
+			  data = {
+			    'id': row[0],
+			    'firstname' : row[1],
+			    'lastname' : row[2],
+			    'date_of_birth' : row[3].isoformat() if hasattr(row[3], 'isoformat') else row[3],
+			    'username' : row[4]
+			  }
+			return json.dumps(data)
 
 	#changeName changes the first and last name of a give user ID. Using PUT requests.
-	def changeName(self, userid):
-		c.userid = userid
+	def editUser(self):
+		data = 0;
 		if request.method == 'PUT':
-			if userid in data:
-				data[userid]['firstname'] = request.POST.get('firstName')
-				data[userid]['lastname'] = request.POST.get('lastName')
-				return json.dumps(data[userid]) 
+			cur.execute('SELECT * FROM users WHERE username = "' + request.POST.get('userName') + '" AND password = "' + request.POST.get('password') + '";')
+			for row in cur.fetchall() :
+			  data = {
+			    'id': row[0],
+			    'firstname' : row[1],
+			    'lastname' : row[2],
+			    'date_of_birth' : row[3].isoformat() if hasattr(row[3], 'isoformat') else row[3],
+			    'username' : row[4]
+			  }
+			if data:
+				cur.execute('UPDATE users SET firstname = "' + request.POST.get('firstName') + '",  lastname= "' + request.POST.get('lastName') + '", date_of_birth = "' + request.POST.get('dateOfBirth') + '";')
+				db.commit()
+				cur.execute('SELECT * FROM users WHERE id = "' + data['id'] + '";')
+				for row in cur.fetchall() :
+				  data = {
+				    'id': row[0],
+				    'firstname' : row[1],
+				    'lastname' : row[2],
+				    'date_of_birth' : row[3].isoformat() if hasattr(row[3], 'isoformat') else row[3],
+				    'username' : row[4]
+				  }
+				return json.dumps(data)
 			else:
-				return json.dumps({'error':'User not found.'})
+				return json.dumps({'error':'Authentication error.'})
 
 	#userCheck function to look up a given user based on user ID. Using GET requests.
 	def userCheck(self, userid):
@@ -58,9 +84,8 @@ class UsersController(BaseController):
 		      'id': row[0],
 		      'firstname' : row[1],
 		      'lastname' : row[2],
-		      'sex' : row[3],
-		      'date_of_birth' : row[4].isoformat() if hasattr(row[4], 'isoformat') else row[4],
-		      'username' : row[5],
+		      'date_of_birth' : row[3].isoformat() if hasattr(row[3], 'isoformat') else row[3],
+		      'username' : row[4]
 		    }
 		  if data:
 			  return json.dumps(data)
@@ -69,7 +94,6 @@ class UsersController(BaseController):
 
 	#remoceUser deletes a user from the 'database' based on user ID. Using DELETE requests.
 	def removeUser(self, userid):
-		c.userid = userid
 		data = 0;
 		if request.method == 'DELETE':
 		      cur.execute('SELECT * FROM users WHERE id = "' + userid +'";')
@@ -78,9 +102,8 @@ class UsersController(BaseController):
 			  'id': row[0],
 			  'firstname' : row[1],
 			  'lastname' : row[2],
-			  'sex' : row[3],
-			  'date_of_birth' : row[4].isoformat() if hasattr(row[4], 'isoformat') else row[4],
-			  'username' : row[5],
+			  'date_of_birth' : row[3].isoformat() if hasattr(row[3], 'isoformat') else row[3],
+			  'username' : row[4]
 			}
 		      cur.execute('DELETE FROM users WHERE id = "' + userid +'";')
 		      db.commit()
