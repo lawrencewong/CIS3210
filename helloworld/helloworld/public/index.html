@@ -39,7 +39,29 @@
       </div>
 
       <div class="container">
-        <h2><a href="http://www.mysql.com/" style="color: WHITE;">MySQL</a></h2>
+	<h1 style="font-size: 75px;">Hi there.</h1>
+	<div class="rest-form">
+	  <div class="row">
+	    <div class="span12">
+	      <h3>Log in</h3>
+	      <div>
+		<input type="text" id="userName" placeholder="Username">
+	      </div>
+	      <div>
+		<input type="password" id="password" placeholder="Password">
+	      </div>
+	      <div>
+		<button class="btn btn-info btn-small" id="Submit">Submit</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+      </div>
+      <% if(cookie from server side ){
+	require   
+    }%>
+      <div class="container">
+        <h2><a href="http://www.mysql.com/" style="color: #000000;">MySQL</a></h2>
 	<h5>This is an web application that uses a RESTful API and jQuery's AJAX to mimic a user managment web application with a database.
 	    Play with the user's functions and see what the returns from the server side are. All user functions work. The server side has been
 	    updated to work with a running MySQL databse.
@@ -51,10 +73,10 @@
           <div class="row">
             <div class="span6">
               <div>
-                <input type="text" min="0" id="userName" placeholder="Username">
+                <input type="text" id="userName" placeholder="Username">
               </div>
               <div>
-                <input type="password" min="0" id="password" placeholder="Password">
+                <input type="password" id="password" placeholder="Password">
               </div>
               <div>
                 <input type="text" id="firstName" placeholder="First Name">
