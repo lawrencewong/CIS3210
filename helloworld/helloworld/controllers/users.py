@@ -15,12 +15,18 @@ db = MySQLdb.connect(host="dursley.socs.uoguelph.ca",
                     db="lwong01") # course databasey
 cur = db.cursor()
 class UsersController(BaseController):
+	
+	def index(self):
+	  return render("/login.mako");
       
+	def test(self):
+	  return render("/manageUsers.mako")
+	  
 	#existingUser checks if there is a user already with the same username
 	def existingUser(self, username):
 		c.username = username
 		if request.method == 'GET':
-		  sql = 'SELECT * FROM users WHERE BINARY username = "' + username + '";';
+		  sql = 'SELECT * FROM users WHERE BINARY username = "' + username + '";'
 		  cur.execute(sql)
 		  row = cur.fetchone()
 		  if row:

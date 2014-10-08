@@ -38,70 +38,9 @@
         </div>
       </div>
 
-      <div class="container">
-	<h1 style="font-size: 75px;">Hi there.</h1>
-	<div class="rest-form">
-	  <div class="row">
-	    <div class="span12">
-	      <h3>Log in</h3>
-	      <div>
-		<input type="text" id="userName" placeholder="Username">
-	      </div>
-	      <div>
-		<input type="password" id="password" placeholder="Password">
-	      </div>
-	      <div>
-		<button class="btn btn-info btn-small" id="Submit">Submit</button>
-	      </div>
-	    </div>
-	  </div>
-	</div>
+      <div id="placeholder">
       </div>
-      <% if(cookie from server side ){
-	require   
-    }%>
-      <div class="container">
-        <h2><a href="http://www.mysql.com/" style="color: #000000;">MySQL</a></h2>
-	<h5>This is an web application that uses a RESTful API and jQuery's AJAX to mimic a user managment web application with a database.
-	    Play with the user's functions and see what the returns from the server side are. All user functions work. The server side has been
-	    updated to work with a running MySQL databse.
-	</h5>
-      </div>
-
-      <div class="container">
-        <div class="rest-form">
-          <div class="row">
-            <div class="span6">
-              <div>
-                <input type="text" id="userName" placeholder="Username">
-              </div>
-              <div>
-                <input type="password" id="password" placeholder="Password">
-              </div>
-              <div>
-                <input type="text" id="firstName" placeholder="First Name">
-              </div>
-              <div>
-                <input type="text" id="lastName" placeholder="Last Name">
-              </div>
-            </div>
-            <div class="span6">
-              <label for="status-box" class="rest-labels">User Functions:</label>
-              <div>
-                <button class="btn btn-success btn-small" id="addUser">Add User</button>
-                <button class="btn btn-warning btn-small" id="changeName">Edit User</button>
-                <button class="btn btn-info btn-small" id="checkUser">User Check</button>
-                <button class="btn btn-danger btn-small" id="removeUser">Remove User</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="user-forms">
-        <label for="status-box"  class="rest-labels">Status / Returns:</label>
-        <textarea readonly id="status-box" placeholder="Status and data that will be returned."></textarea>
-      </div>
+      
 
       <div id="push"></div> <!-- Sticky footer push -->
     </div>
@@ -118,6 +57,16 @@
     <script src="./js/jquery-1.11.1.min.js"></script>
     <script src="./js/bootstrap.min.js"></script>
     <script type="text/javascript">
+
+      $('#Submit').on('click', function(event) {
+	$.ajax({
+	  type: "GET",
+	  url: "/users/test"
+	})
+	.done(function( data ) {
+	  $('#placeholder').html(data);
+	});
+      });
       $('#addUser').on('click', function(event) {
 	  if($('#userName').val()=="" || $('#firstName').val()=="" || $('#lastName').val()=="" || $('#password').val()==""){
 	     $('#status-box').val("Username, password, first and last names required.");
