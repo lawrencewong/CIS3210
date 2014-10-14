@@ -19,6 +19,10 @@ It is an application that lets users to be added, edited, checked or removed.
 Using different types of requests and actions the server side will return JSON
 objects that represent the actions.
 
+Example login:
+username: gklotz
+password: greg 
+
 ********************CREATIVITY ELEMENT***********************
 All previous user functions have been enhanced with an actual database.
 The web application is no longer relient on being a one session run, because
@@ -44,5 +48,6 @@ Authenticaion is also used when trying to edit a user.
 
 I am using SQL's NOW() function to capture what date the accounts were created on.
 
-Frontend tests have been updated.
+Using mako templating to serve up the proper tools. (login, user management)
+Added a log in as label and log out button, that deletes the cookie.
 ***************************************************************

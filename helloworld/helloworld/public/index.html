@@ -38,7 +38,27 @@
         </div>
       </div>
 
-      <div id="placeholder">
+      <div id="placeholder" style="margin-top: 50px">
+	<div class="container">
+	  <h1 style="font-size: 75px;">Hi there.</h1>
+	  <div class="rest-form">
+	    <div class="row">
+	      <div class="span12">
+		<h3>Log in</h3>
+		<label id="errorPlaceHolder" style="color: RED;"></label>
+		<div>
+		  <input type="text" id="loginUserName" placeholder="Username">
+		</div>
+		<div>
+		  <input type="password" id="loginPassword" placeholder="Password">
+		</div>
+		<div>
+		  <button class="btn btn-info btn-small" id="Submit">Submit</button>
+		</div>
+	      </div>
+	    </div>
+	  </div>
+	</div>
       </div>
       
 
@@ -60,98 +80,20 @@
 
       $('#Submit').on('click', function(event) {
 	$.ajax({
-	  type: "GET",
-	  url: "/users/test"
+	  type: "POST",
+	  url: "/users/login",
+	  data: {password:$('#loginPassword').val(), userName:$('#loginUserName').val()}
 	})
 	.done(function( data ) {
-	  $('#placeholder').html(data);
-	});
-      });
-      $('#addUser').on('click', function(event) {
-	  if($('#userName').val()=="" || $('#firstName').val()=="" || $('#lastName').val()=="" || $('#password').val()==""){
-	     $('#status-box').val("Username, password, first and last names required.");
-	  }else{
-	    $.ajax({
-	      type: "GET",
-	      url: "/users/existingUser/" + $('#userName').val(),
-	    })
-	    .done(function( data ) {
-	      var obj = jQuery.parseJSON( data );
-	      if( obj.hasOwnProperty('error')){;
-		$('#status-box').val("ERROR: " + obj.error);
-	      }else{
-		 $.ajax({
-		  type: "POST",
-		  url: "/users/addUser",
-		  data: {firstName:$('#firstName').val(), lastName:$('#lastName').val(), password:$('#password').val(), userName:$('#userName').val()}
-		})
-		.done(function( data ) {
-		  $('#status-box').val("Added User: " + data);
-		});
-	      }
-	    });
+	  var obj = jQuery.parseJSON( data );
+	  if( obj.hasOwnProperty('error')){
+	    $('#errorPlaceHolder').html("ERROR: " + obj.error);
+	  }else{;
+	    var username = $('#loginUserName').val()
+	    $('#placeholder').html(obj.code);
+	    $('#loggedInUser').append(username);
 	  }
 	});
-
-      $('#changeName').on('click', function(event) {
-        if($('#userName').val()=="" || $('#firstName').val()=="" || $('#lastName').val()=="" || $('#password').val()==""){
-          $('#status-box').val("Username, password, first and last names required.");
-        }else{
-          $.ajax({
-            type: "PUT",
-            url: "/users/editUser/" + $('#userid').val(),
-            data: {firstName:$('#firstName').val(), lastName:$('#lastName').val(), password:$('#password').val(), userName:$('#userName').val()}
-          })
-          .done(function( data ) {
-            var obj = jQuery.parseJSON( data );
-            if( obj.hasOwnProperty('error')){
-              $('#status-box').val("ERROR: " + obj.error);
-            }else{
-              $('#status-box').val("Edited User: " + data);
-            }
-          });
-        }
-      });
-
-      $('#checkUser').on('click', function(event) {
-        if($('#userName').val()==""){
-          $('#status-box').val("Username required.");
-        }else{
-          $.ajax({
-            type: "GET",
-            url: "/users/userCheck/" + $('#userName').val()
-          })
-          .done(function( data ) {
-            var obj = jQuery.parseJSON( data );
-            if( obj.hasOwnProperty('error')){
-              $('#status-box').val("ERROR: " + obj.error);
-            }else{
-              $('#status-box').val("Found User: " + data);
-            }
-          });
-        }
-      });
-
-      $('#removeUser').on('click', function(event) {
-        if($('#userName').val()==""){
-            $('#status-box').val("Username required.");
-          }else{
-            event.preventDefault();
-            if (window.confirm("Are you sure?")) {
-              $.ajax({
-                type: "DELETE",
-                url: "/users/removeUser/" + $('#userName').val(),
-              })
-              .done(function( data ) {
-                var obj = jQuery.parseJSON( data );
-                if( obj.hasOwnProperty('error')){;
-                  $('#status-box').val("ERROR: " + obj.error);
-                }else{
-                  $('#status-box').val("Removing User: " + data);
-                }
-              });
-            }
-          }
       });
     </script>
     </body>

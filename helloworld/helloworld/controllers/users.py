@@ -12,15 +12,25 @@ log = logging.getLogger(__name__)
 db = MySQLdb.connect(host="dursley.socs.uoguelph.ca",
                     user="lwong01", # replace with your username
                     passwd="0725315", # replace with your password (student id number, including leading 0)
-                    db="lwong01") # course databasey
+                    db="lwong01") # course database
 cur = db.cursor()
 class UsersController(BaseController):
-	
-	def index(self):
-	  return render("/login.mako");
       
-	def test(self):
-	  return render("/manageUsers.mako")
+	# Log into the system, serves up either an error or the user management tool Sets the username cookie
+	def login(self):
+		sql = 'SELECT * FROM users WHERE BINARY username = "' + request.POST.get('userName') + '" AND BINARY password = "' + request.POST.get('password') + '";'
+		cur.execute(sql)
+		row = cur.fetchone()
+		if row:
+		  response.set_cookie("username" , request.POST.get('userName'), max_age=180*24*3600)
+		  return json.dumps({'code': render("/manageUsers.mako")})
+		else:
+		  return json.dumps({'error':'Authentication error.'})
+	
+	# Log out of the system, serves up the login tool. Deletes theusername cookie
+	def logout(self):
+		response.set_cookie("username" , request.cookies.get("username"), max_age= -1)
+		return render("/login.mako")
 	  
 	#existingUser checks if there is a user already with the same username
 	def existingUser(self, username):
@@ -63,10 +73,10 @@ class UsersController(BaseController):
 			cur.execute(sql)
 			row = cur.fetchone()
 			if row:
-				sql = 'UPDATE users SET firstname = "' + request.POST.get('firstName') + '",  lastname= "' + request.POST.get('lastName') + '" WHERE id = "' + str(data['id']) +'";'
+				sql = 'UPDATE users SET firstname = "' + request.POST.get('firstName') + '",  lastname= "' + request.POST.get('lastName') + '" WHERE username = "' + request.POST.get('userName') + '";'
 				cur.execute(sql)
 				db.commit()
-				cur.execute('SELECT * FROM users WHERE id = "' + str(data['id']) + '";')
+				cur.execute('SELECT * FROM users WHERE username = "' + request.POST.get('userName') + '";')
 				for row in cur.fetchall() :
 				  data = {
 				    'id': row[0],
