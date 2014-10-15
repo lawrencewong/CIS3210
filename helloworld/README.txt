@@ -50,4 +50,6 @@ I am using SQL's NOW() function to capture what date the accounts were created o
 
 Using mako templating to serve up the proper tools. (login, user management)
 Added a log in as label and log out button, that deletes the cookie.
+
+Using AJAX to detemine if the user is already logged in via cookies.
 ***************************************************************

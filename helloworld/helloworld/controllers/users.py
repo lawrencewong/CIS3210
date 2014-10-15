@@ -16,20 +16,33 @@ db = MySQLdb.connect(host="dursley.socs.uoguelph.ca",
 cur = db.cursor()
 class UsersController(BaseController):
       
+	# Checks if the user is logged in when hitting the hompage
+	def checkLogedIn(self):
+		if request.POST.get('username'):
+		  if request.POST.get('username') == request.cookies.get("usernameCIS3210"):
+		    return render("/manageUsers.mako")
+		  else:
+		    response.set_cookie("usernameCIS3210" , request.cookies.get("usernameCIS3210"), max_age= -1)
+		    return render("/login.mako")
+		else:
+		  response.set_cookie("usernameCIS3210" , request.cookies.get("usernameCIS3210"), max_age= -1)
+		  return render("/login.mako")
+		  
 	# Log into the system, serves up either an error or the user management tool Sets the username cookie
 	def login(self):
 		sql = 'SELECT * FROM users WHERE BINARY username = "' + request.POST.get('userName') + '" AND BINARY password = "' + request.POST.get('password') + '";'
 		cur.execute(sql)
 		row = cur.fetchone()
 		if row:
-		  response.set_cookie("username" , request.POST.get('userName'), max_age=180*24*3600)
+		  response.set_cookie("usernameCIS3210" , request.POST.get('userName'), max_age=180*24*3600)
 		  return json.dumps({'code': render("/manageUsers.mako")})
 		else:
 		  return json.dumps({'error':'Authentication error.'})
 	
 	# Log out of the system, serves up the login tool. Deletes theusername cookie
 	def logout(self):
-		response.set_cookie("username" , request.cookies.get("username"), max_age= -1)
+		response.set_cookie("usernameCIS3210" , request.cookies.get("usernameCIS3210"), max_age= -1)
+		print request.cookies.get("usernameCIS3210")
 		return render("/login.mako")
 	  
 	#existingUser checks if there is a user already with the same username

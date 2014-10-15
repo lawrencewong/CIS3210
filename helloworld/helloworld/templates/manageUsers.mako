@@ -10,7 +10,7 @@
   <div class="rest-form">
     <div class="row">
       <div>
-	<label style="color: BLUE;" id="loggedInUser">Logged in as: </label>
+	<label style="color: BLUE;" id="loggedInUser">Logged in as: ${request.cookies.get("usernameCIS3210")} </label>
       </div>
       <div class="span6">
 	<div>
