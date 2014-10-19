@@ -53,3 +53,31 @@ Added a log in as label and log out button, that deletes the cookie.
 
 Using AJAX to detemine if the user is already logged in via cookies.
 ***************************************************************
+
+**********************SECURTIY ELEMENT*************************
+My application right now is too small for any injections to take
+place esepically with the Status / Returns text box I have in
+the frontend. Any JSON objects that are returned go into that status
+box and any scripts I try to enter do not get ran. I think
+pylons/python is doing something to sanitize some of my inputs on default.
+
+AJAX Vulnerabilities
+Editing: Doesn't work because of the status box. Everything is returned
+in JSON to the status box
+Adding: Doesn't work server gets a 404 for a bad request.
+
+Code Execution:
+No where to upload files
+
+Configuration Vulnerabilities:
+Couldn't dump any configuration files using injections
+
+Cross-Site Scripting (XSS):
+Can't upload any script that would affect the web app because all
+return will result into the status box.
+
+Stored XSS:
+I tried entering some script into the first name for the database, but 
+when I go and use the User Check tool the script does not run.
+
+***************************************************************

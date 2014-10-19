@@ -42,7 +42,6 @@ class UsersController(BaseController):
 	# Log out of the system, serves up the login tool. Deletes theusername cookie
 	def logout(self):
 		response.set_cookie("usernameCIS3210" , request.cookies.get("usernameCIS3210"), max_age= -1)
-		print request.cookies.get("usernameCIS3210")
 		return render("/login.mako")
 	  
 	#existingUser checks if there is a user already with the same username
