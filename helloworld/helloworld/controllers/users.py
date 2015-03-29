@@ -9,10 +9,10 @@ from helloworld.lib.base import BaseController, render
 
 log = logging.getLogger(__name__)
 
-db = MySQLdb.connect(host="dursley.socs.uoguelph.ca",
-                    user="lwong01", # replace with your username
-                    passwd="0725315", # replace with your password (student id number, including leading 0)
-                    db="lwong01") # course database
+db = MySQLdb.connect(host="XXXXX",
+                    user="XXXXXX", # replace with your username
+                    passwd="XXXXXX", # replace with your password (student id number, including leading 0)
+                    db="XXXXXX") # course database
 cur = db.cursor()
 class UsersController(BaseController):
       
